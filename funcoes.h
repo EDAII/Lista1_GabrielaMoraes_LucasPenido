@@ -10,6 +10,7 @@ Alunos:
 #include <stdio_ext.h>
 #include <unistd.h>
 #include <time.h>
+#include <math.h>
 
 #define LIMPA_TELA system("clear")
 #define LIMPA_BUFFER __fpurge(stdin)
@@ -33,10 +34,14 @@ Alunos:
 
 int menuPrincipal();
 int menuTamanho();
+int menuBusca();
 int converteOpcaoEmTamanho(int);
 int* alocaVetor(int *, int);
 int* preencheVetorAleatorio(int *, int);
 void imprimeVetorEmTabela(int *, int);
 int selecionaValorDeBusca();
 int buscaSequencialSentinela(int *, int, int);
-void imprimeResultadoBuscaSequencialSentinela(int, int);
+void imprimeResultadoDaBusca(int, int);
+void realizaSwap(int *, int *);
+void bubbleSort(int *, int);
+int jumpSearch(int *, int , int);

@@ -11,7 +11,7 @@ int menuPrincipal(){
   int opcao;
 
   //Instruções
-  // LIMPA_TELA;
+  LIMPA_TELA;
   printf("================ Métodos de Busca ====================");
   printf("\n1 - Realizar Busca");
   printf("\n0 - Sair");
@@ -24,6 +24,28 @@ int menuPrincipal(){
   return opcao;
 }
 
+int menuBusca(){
+
+  //Variaveis
+  int escolha;
+
+  //Instruções
+  LIMPA_TELA;
+  printf("================ Selecione o Método de Busca ====================");
+  printf("\n1 - Busca Sequencial com Sentinela");
+  printf("\n2 - Busca Sequencial Indexada");
+  printf("\n3 - Busca Binária");
+  printf("\n4 - Jump Search");
+  printf("\n5 - Busca Exponencial");
+  do{
+    printf("\nDigite a opção que deseja realizar: ");
+    LIMPA_BUFFER;
+    scanf("%d", &escolha);
+  }while(escolha <= 0 || escolha >= 6);
+
+
+  return escolha;
+}
 
 int menuTamanho(){
 
@@ -129,6 +151,7 @@ void imprimeVetorEmTabela(int *vetor, int tamanho){
   // Variáveis
   int i;
   // Instruções
+  printf("\n");
   for(i = 0; i < tamanho; i++){
     if(vetor[i] < 10){
       printf("%d      |", vetor[i]);
@@ -180,15 +203,68 @@ int buscaSequencialSentinela(int *vetor, int valorDeBusca, int tamanho){
     else return (-1);
 }
 
-void imprimeResultadoBuscaSequencialSentinela(int posicao, int valorDeBusca){
+void imprimeResultadoDaBusca(int posicao, int valorDeBusca){
+  //Variaveis
+
+  //Instruções
   if(posicao != -1){
-    printf("------------------------------------------");
+    printf("\n------------------------------------------");
     printf("\n|Valor %d encontrado na posicão: %d |\n", valorDeBusca, posicao);
     printf("------------------------------------------");
   }
   else{
-    printf("---------------------------------------");
+    printf("\n---------------------------------------");
     printf("\n|O valor %d não está presente no vetor.|\n", valorDeBusca);
     printf("---------------------------------------");
   }
+}
+
+void realizaSwap(int *anterior, int *proximo){
+  //Variaveis
+  int aux;
+
+  //Instruções
+  aux = *anterior;
+  *anterior = *proximo;
+  *proximo = aux;
+}
+
+void bubbleSort(int *vetor, int tamanho){
+  //Variaveis
+  int i, j;
+
+  //Instruções
+   for (i = 0; i < tamanho-1; i++){
+     for (j = 0; j < tamanho-i-1; j++){
+       if (vetor[j] > vetor[j+1]){
+         realizaSwap(&vetor[j], &vetor[j+1]);
+       }
+     }
+   }
+}
+
+int jumpSearch(int *vetor, int tamanhoVetor, int valorDeBusca){
+  //Variaveis
+  int tamanhoBloco, anterior = 0;
+
+  //Instruções
+  tamanhoBloco = sqrt(tamanhoVetor);
+
+  // Encontrar o bloco onde o valor deve estar
+  while(vetor[tamanhoBloco] <= valorDeBusca && tamanhoBloco < tamanhoVetor){
+    anterior = tamanhoBloco;
+    tamanhoBloco += sqrt(tamanhoVetor);
+    if (anterior >= tamanhoVetor) {
+      return -1;
+    }
+  }
+
+  // Busca linear no bloco selecionado
+  for(int i = anterior; i < tamanhoVetor; i++) {
+    if(vetor[i] == valorDeBusca){
+      return i;
+    }
+  }
+
+  return -1;
 }
