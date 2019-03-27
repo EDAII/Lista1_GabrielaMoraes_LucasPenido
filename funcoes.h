@@ -31,7 +31,8 @@ Alunos:
 #define TAMANHO_11 1000000
 #define GNUPLOT "gnuplot -persist"
 
-
+FILE* abreArquivo(FILE *);
+FILE* abreGNU(FILE *);
 int menuPrincipal();
 int menuTamanho();
 int menuBusca();

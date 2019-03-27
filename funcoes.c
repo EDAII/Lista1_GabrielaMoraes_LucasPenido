@@ -6,6 +6,26 @@ Alunos:
 
 #include "funcoes.h"
 
+FILE* abreArquivo(FILE *fp){
+  fp = fopen("dados.txt", "w+");
+  if(fp == NULL){
+    printf("Erro ao abrir o arquivo");
+    exit(0);
+  }
+  return fp;
+}
+
+FILE* abreGNU(FILE *gp){
+  gp = popen(GNUPLOT, "w");
+  if (gp == NULL) {
+      printf("Erro ao abrir pipe para o GNU plot.\n"
+          "Instale com 'sudo apt-get install gnuplot'\n");
+      exit(0);
+  }
+
+  return gp;
+}
+
 int menuPrincipal(){
   //Variaveis
   int opcao;
@@ -13,10 +33,11 @@ int menuPrincipal(){
   //Instruções
   LIMPA_TELA;
   printf("================ Métodos de Busca ====================");
-  printf("\n1 - Realizar Busca");
+  printf("\n\n1 - Realizar Busca");
   printf("\n0 - Sair");
+  printf("\n\nOBS: O gráfico será plotado com pelo menos UMA busca com elemento encontrado. Porém, para melhores resultados utilize pelo menos DUAS buscas.");
   do{
-    printf("\nDigite a opção que deseja realizar: ");
+    printf("\n\nDigite a opção que deseja realizar: ");
     LIMPA_BUFFER;
     scanf("%d", &opcao);
   }while(opcao >= 2);
