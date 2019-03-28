@@ -153,8 +153,11 @@ int* alocaVetor(int *vetor, int tamanho){
 
 int* preencheVetorAleatorio(int *vetor, int tamanho){
   // Variáveis
-  int i, aux, status;
+  int i, aux, status, inicio;
   // Instruções
+  inicio = clock();
+  int tempInit = 0;
+  int tempAtual;
   for (i = 0; i < tamanho; i++) {
      do {
        vetor[i] = rand() % 1000000 + 1;
@@ -164,6 +167,11 @@ int* preencheVetorAleatorio(int *vetor, int tamanho){
               status = REPETIDO;
         }
      } while (status == REPETIDO);
+     tempAtual = ((clock()-inicio)/CLOCKS_PER_SEC);
+     if (tempAtual != tempInit) {
+      printf("%.0f%\n", ((double)i/(double)tamanho)*100);
+      tempInit = ((clock()-inicio)/CLOCKS_PER_SEC);
+     }
   }
   return vetor;
 }
@@ -264,6 +272,33 @@ void bubbleSort(int *vetor, int tamanho){
    }
 }
 
+/* Função com a implementação do algorítmo de ordenação Quick Sort. */
+void quickSort(int *vetor, int start, int end){
+    if (start < end) {
+
+        /* O pivo sempre será o primeiro elemento da partição não ordenada. */
+        int pivo = start, flag = pivo + 1, i, aux;
+
+        for (i = pivo + 1; i <= end; i++) {
+            if (vetor[i] < vetor[pivo]) {
+                if (flag != i) {
+                    aux = vetor[i];
+                    vetor[i] = vetor[flag];
+                    vetor[flag] = aux;
+                }
+                flag++;
+            }
+        }
+
+        aux = vetor[pivo];
+        vetor[pivo] = vetor[flag - 1];
+        vetor[flag - 1] = aux;
+
+        quickSort(vetor, start, flag-2);
+        quickSort(vetor, flag, end);
+    }
+}
+
 int jumpSearch(int *vetor, int tamanhoVetor, int valorDeBusca){
   //Variaveis
   int tamanhoBloco, anterior = 0;
@@ -288,4 +323,97 @@ int jumpSearch(int *vetor, int tamanhoVetor, int valorDeBusca){
   }
 
   return -1;
+}
+
+/* Função para busca binária. */
+int binarySearch(int *vetor, int comecoVetor, int fimVetor, int valorDeBusca){
+
+  if (fimVetor >= comecoVetor)
+  {
+      int mid = comecoVetor + (fimVetor - comecoVetor)/2;
+
+      // If the element is present at the middle
+      // itself
+      if (vetor[mid] == valorDeBusca)
+          return mid;
+
+      // If element is smaller than mid, then it
+      // can only be present n left subarray
+      if (vetor[mid] > valorDeBusca)
+          return binarySearch(vetor, comecoVetor, mid-1, valorDeBusca);
+
+      // Else the element can only be present
+      // in right subarray
+      return binarySearch(vetor, mid+1, fimVetor, valorDeBusca);
+  }
+
+  // We reach here when element is not present
+  // in array
+  return -1;
+}
+
+int buscaSequencialIndexada(int *vetor, int tamanho, int valorDeBusca) {
+
+  int i, x = 0, aux, *vetorAux;
+  int passo, index = 0;
+  int tamanhoVetorAux, fimSetor;
+
+  // Conta quantas casas decimais tem o tamanho do vetor de busca.
+  for (i = 1, aux = 10; tamanho/aux > 0; i++, aux*=10);
+
+  // Cosideramos que o tamanho do vetor auxiliar terá tamanho = 2^(quantidade de casas decimais do original).
+  tamanhoVetorAux = pow(2,i);
+
+  passo = (tamanho/tamanhoVetorAux);
+
+  vetorAux = (int *) malloc ((tamanhoVetorAux) * sizeof(int));
+
+  // Preenche o vetor auxiliar
+  for (int j = 0; j < tamanhoVetorAux; j++) {
+      vetorAux[j] = vetor[passo * (j + 1)];
+      // printf("vetorAux[%d] = vetor[%d] => %d\n", j, passo * (j + 1),  vetor[passo * (j + 1)]);
+  }
+
+  // Percorre o vetor auxiliar até o fim ou até achar um número menor no vetor de busca para definir o valor
+  // inicial do setor que ocorrerá a busca.
+  while (valorDeBusca >= vetorAux[x] && x < tamanhoVetorAux) {
+    x++;
+    index = x * passo;
+  }
+
+  // Caso o próximo passo seja maior que o tamanho do vetor de busca o final do setor a ser procurado é o tamanho
+  // do arquivo de busca, caso o contrário o finaal do setor será o próximo passo.
+  if (index + passo > tamanho) {
+    fimSetor = tamanho;
+  } else {
+    fimSetor = index + passo;
+  }
+
+  // Percorre o vetor de busca com o setor definido
+  if (x <= tamanhoVetorAux) {
+    for (int b = index; b < fimSetor; b++) {
+      if (vetor[b] == valorDeBusca) {
+        return b;
+      }
+    }
+  }
+
+  return -1;
+}
+
+int buscaExponencial(int *vetor, int tamanho, int valorDeBusca) {
+  int i = 1;
+
+  // Caso o número procurado esteja na primeira posição.
+    if (vetor[0] == valorDeBusca)
+        return 0;
+
+    // Find range for binary search by
+    // repeated doubling
+    // Define o intervalo para a busca binária
+    while (i < tamanho && vetor[i] <= valorDeBusca)
+        i = i*2;
+
+    // Chama a busca binária no intervalo definido.
+    return binarySearch(vetor, i/2, fmin(i, tamanho), valorDeBusca);
 }
