@@ -1,8 +1,9 @@
 /*
 Alunos:
   Gabriela Chaves de Moraes - 16/0006872
-  Lucas Penido Antunes - 16/
+  Lucas Penido Antunes - 16/0013143
 */
+#define _DEFAULT_SOURCE
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,4 +46,8 @@ int buscaSequencialSentinela(int *, int, int);
 void imprimeResultadoDaBusca(int, int);
 void realizaSwap(int *, int *);
 void bubbleSort(int *, int);
+void quickSort(int *, int, int);
 int jumpSearch(int *, int , int);
+int binarySearch(int *, int, int, int);
+int buscaSequencialIndexada(int *, int, int);
+int buscaExponencial(int *, int, int);
