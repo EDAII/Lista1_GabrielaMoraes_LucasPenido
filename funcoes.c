@@ -15,7 +15,7 @@ FILE* abreArquivo(FILE *fp){
   return fp;
 }
 
-FILE* abreGNU(FILE *gp){
+FILE* abreGNUPLOT(FILE *gp){
   gp = popen(GNUPLOT, "w");
   if (gp == NULL) {
       printf("Erro ao abrir pipe para o GNU plot.\n"
@@ -43,29 +43,6 @@ int menuPrincipal(){
   }while(opcao >= 2);
 
   return opcao;
-}
-
-int menuBusca(){
-
-  //Variaveis
-  int escolha;
-
-  //Instruções
-  LIMPA_TELA;
-  printf("================ Selecione o Método de Busca ====================");
-  printf("\n1 - Busca Sequencial com Sentinela");
-  printf("\n2 - Busca Sequencial Indexada");
-  printf("\n3 - Busca Binária");
-  printf("\n4 - Jump Search");
-  printf("\n5 - Busca Exponencial");
-  do{
-    printf("\nDigite a opção que deseja realizar: ");
-    LIMPA_BUFFER;
-    scanf("%d", &escolha);
-  }while(escolha <= 0 || escolha >= 6);
-
-
-  return escolha;
 }
 
 int menuTamanho(){
@@ -248,29 +225,6 @@ void imprimeResultadoDaBusca(int posicao, int valorDeBusca){
   }
 }
 
-void realizaSwap(int *anterior, int *proximo){
-  //Variaveis
-  int aux;
-
-  //Instruções
-  aux = *anterior;
-  *anterior = *proximo;
-  *proximo = aux;
-}
-
-void bubbleSort(int *vetor, int tamanho){
-  //Variaveis
-  int i, j;
-
-  //Instruções
-   for (i = 0; i < tamanho-1; i++){
-     for (j = 0; j < tamanho-i-1; j++){
-       if (vetor[j] > vetor[j+1]){
-         realizaSwap(&vetor[j], &vetor[j+1]);
-       }
-     }
-   }
-}
 
 /* Função com a implementação do algorítmo de ordenação Quick Sort. */
 void quickSort(int *vetor, int start, int end){
@@ -424,8 +378,6 @@ void copiaVetor(int *vetor1, int *vetor2, int tamanho) {
 
   //Instruções
    for (i = 0; i < tamanho; i++){
-     // for (j = 0; j < tamanho; j++){
        *(vetor2 + i) = *(vetor1 + i);
-     // }
    }
 }

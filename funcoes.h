@@ -33,10 +33,9 @@ Alunos:
 #define GNUPLOT "gnuplot -persist"
 
 FILE* abreArquivo(FILE *);
-FILE* abreGNU(FILE *);
+FILE* abreGNUPLOT(FILE *);
 int menuPrincipal();
 int menuTamanho();
-int menuBusca();
 int converteOpcaoEmTamanho(int);
 int* alocaVetor(int *, int);
 int* preencheVetorAleatorio(int *, int);
@@ -44,8 +43,6 @@ void imprimeVetorEmTabela(int *, int);
 int selecionaValorDeBusca();
 int buscaSequencialSentinela(int *, int, int);
 void imprimeResultadoDaBusca(int, int);
-void realizaSwap(int *, int *);
-void bubbleSort(int *, int);
 void quickSort(int *, int, int);
 int jumpSearch(int *, int , int);
 int binarySearch(int *, int, int, int);

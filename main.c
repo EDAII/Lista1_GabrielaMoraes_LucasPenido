@@ -10,7 +10,7 @@ int main(int argc, char* argv[]){
   setlocale(LC_ALL, "Portuguese");
 
   // Variáveis
-  int escolha, tamanhoVetor, valorDeBusca, posicao, metodoBusca, posicaoSequencialSentinela;
+  int escolha, tamanhoVetor, valorDeBusca, posicao, posicaoSequencialSentinela;
   double  tempoOrdenacao, tempoPreenchimento, tempoJumpSearch, tempoBuscaSequencialSentinela, tempoBuscaSequencialIndexada,
           tempoBuscaBinaria, tempoBuscaExponencial;
   int *vetor = NULL, *vetorOrdenado = NULL;
@@ -25,8 +25,7 @@ int main(int argc, char* argv[]){
     switch(escolha){
       case BUSCA:
         fp = abreArquivo(fp);
-        gp = abreGNU(gp);
-        // metodoBusca = menuBusca();
+        gp = abreGNUPLOT(gp);
         tamanhoVetor = menuTamanho();
         vetor = alocaVetor(vetor, tamanhoVetor);
         vetorOrdenado = alocaVetor(vetorOrdenado, tamanhoVetor);
@@ -103,22 +102,22 @@ int main(int argc, char* argv[]){
 
 
             //Resultados
-            printf("\n\n=================== Resultado Busca Sequencial com Sentinela===================================");
+            printf("\n\n=================== Resultado Busca Sequencial com Sentinela ===================================");
             imprimeResultadoDaBusca(posicaoSequencialSentinela, valorDeBusca);
             printf("\n\n=================== Resultado das demais ======================================================");
             imprimeResultadoDaBusca(posicao, valorDeBusca);
             printf("\n\n=================== Tempos ======================================================");
             printf("\n\nTempo para buscar o valor utilizando o método de BUSCA SEQUENCIAL COM SENTINELA: %lf s", tempoBuscaSequencialSentinela);
-            printf("\nTempo para realizar a BUSCA SEQUENCIAL INDEXADA %lf s -> Total(incluindo ordenação): %lf s", tempoBuscaSequencialIndexada,(tempoBuscaSequencialIndexada+tempoOrdenacao));
-            printf("\nTempo para realizar a BUSCA BINÁRIA: %lf s -> Total(incluindo ordenação): %lf s", tempoBuscaBinaria, (tempoBuscaBinaria+tempoOrdenacao));
-            printf("\nTempo para realizar o JUMP SEARCH: %lf s -> Total(incluindo ordenação): %lf s", tempoJumpSearch, (tempoJumpSearch+tempoOrdenacao));
-            printf("\nTempo para realizar a BUSCA EXPONENCIAL: %lf s -> Total(incluindo ordenação): %lf s\n\n", tempoBuscaExponencial,(tempoBuscaExponencial+tempoOrdenacao));
+            printf("\nTempo para buscar o valor utilizando o método de BUSCA SEQUENCIAL INDEXADA %lf s -> Total(incluindo ordenação): %lf s", tempoBuscaSequencialIndexada,(tempoBuscaSequencialIndexada+tempoOrdenacao));
+            printf("\nTempo para buscar o valor utilizando o método de BUSCA BINÁRIA: %lf s -> Total(incluindo ordenação): %lf s", tempoBuscaBinaria, (tempoBuscaBinaria+tempoOrdenacao));
+            printf("\nTempo para buscar o valor utilizando o método de JUMP SEARCH: %lf s -> Total(incluindo ordenação): %lf s", tempoJumpSearch, (tempoJumpSearch+tempoOrdenacao));
+            printf("\nTempo para buscar o valor utilizando o método de BUSCA EXPONENCIAL: %lf s -> Total(incluindo ordenação): %lf s\n\n", tempoBuscaExponencial,(tempoBuscaExponencial+tempoOrdenacao));
 
             if(posicao != -1){
-              fprintf(fp, "%d\t%d\t%lf\t%lf\t%lf\t%lf\t%lf\n", posicaoSequencialSentinela, posicao,tempoBuscaSequencialSentinela,tempoBuscaSequencialIndexada,
-                                                            tempoBuscaBinaria, tempoJumpSearch, tempoBuscaExponencial);
+              fprintf(fp, "%d\t%d\t%lf\t%lf\t%lf\t%lf\t%lf\n",  posicaoSequencialSentinela, posicao, tempoBuscaSequencialSentinela,
+                                                                tempoBuscaSequencialIndexada, tempoBuscaBinaria, tempoJumpSearch,
+                                                                tempoBuscaExponencial);
             }
-
           }
         }while(valorDeBusca != -1);
         fprintf(gp, "plot 'dados.txt' using 1:3 with linespoints title 'buscaSequencialSentinela',\
@@ -131,11 +130,11 @@ int main(int argc, char* argv[]){
       break;
 
       case SAIR:
-      LIMPA_TELA;
-      printf("Liberando vetor");
-      free(vetor);
-      printf("\nPrograma finalizado!\n");
-      break;
+        LIMPA_TELA;
+        printf("Liberando vetor");
+        free(vetor);
+        printf("\nPrograma finalizado!\n");
+        break;
     }
   }while(escolha != SAIR);
 
