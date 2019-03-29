@@ -11,7 +11,8 @@ int main(int argc, char* argv[]){
 
   // Variáveis
   int escolha, tamanhoVetor, valorDeBusca, posicao, metodoBusca;
-  double tempoOrdenacao, tempoPreenchimento, tempoJumpSearch, tempoBuscaSequencialSentinela, tempoBuscaBinaria;
+  double  tempoOrdenacao, tempoPreenchimento, tempoJumpSearch, tempoBuscaSequencialSentinela, tempoBuscaSequencialIndexada,
+          tempoBuscaBinaria, tempoBuscaExponencial;
   int *vetor = NULL;
   FILE *gp, *fp;
   clock_t inicio, fim;
@@ -47,8 +48,8 @@ int main(int argc, char* argv[]){
             do{
               valorDeBusca = selecionaValorDeBusca();
               if(valorDeBusca != -1){
-                inicio = clock();
                 vetor = (int*) realloc(vetor, ((tamanhoVetor+1) * sizeof(int)));
+                inicio = clock();
                 posicao = buscaSequencialSentinela(vetor, valorDeBusca, tamanhoVetor);
                 fim = clock();
                 tempoBuscaSequencialSentinela = ((double)(fim-inicio)/CLOCKS_PER_SEC);
@@ -60,73 +61,76 @@ int main(int argc, char* argv[]){
               }
             }while(valorDeBusca != -1);
             vetor = (int*) realloc(vetor, ((tamanhoVetor-1) * sizeof(int)));
-            fprintf(gp, "plot 'dados.txt' with lines\n");
+            fprintf(gp, "plot 'dados.txt' with linespoints\n");
             fclose(fp);
             pclose(gp);
           break;
+
           case 2:
-          // Busca Sequencial Indexada (Penido)
-          fprintf(gp, "set title 'Busca Sequencial Indexada'\n");
-          fprintf(gp, "set xlabel 'Tempo'\n");
-          fprintf(gp, "set ylabel 'Posição'\n");
-          inicio = clock();
-          quickSort(vetor, 0, tamanhoVetor - 1);
-          fim = clock();
-          tempoOrdenacao = ((double)(fim-inicio)/CLOCKS_PER_SEC);
-          imprimeVetorEmTabela(vetor, tamanhoVetor);
-          printf("\n\nTempo para realizar a ordenação por Quick Sort: %lf s\n", tempoOrdenacao);
-          printf("\n\nAperte ENTER para continuar... ");
-          LIMPA_BUFFER;
-          getchar();
-          do{
-            valorDeBusca = selecionaValorDeBusca();
-            if(valorDeBusca != -1){
-              inicio = clock();
-              posicao = buscaSequencialIndexada(vetor, tamanhoVetor, valorDeBusca);
-              fim = clock();
-              imprimeResultadoDaBusca(posicao, valorDeBusca);
-              tempoJumpSearch = ((double)(fim-inicio)/CLOCKS_PER_SEC);
-              printf("\n\nTempo para realizar a Busca Binária: %lf s\n", tempoJumpSearch);
-              if(posicao != -1){
-                fprintf(fp, "%lf\t%d\n", tempoJumpSearch, posicao);
+            fprintf(gp, "set title 'Busca Sequencial Indexada'\n");
+            fprintf(gp, "set xlabel 'Tempo'\n");
+            fprintf(gp, "set ylabel 'Posição'\n");
+            inicio = clock();
+            quickSort(vetor, 0, tamanhoVetor - 1);
+            fim = clock();
+            tempoOrdenacao = ((double)(fim-inicio)/CLOCKS_PER_SEC);
+            imprimeVetorEmTabela(vetor, tamanhoVetor);
+            printf("\n\nTempo para realizar a ordenação por QUICK SORT: %lf s\n", tempoOrdenacao);
+            printf("\n\nAperte ENTER para continuar... ");
+            LIMPA_BUFFER;
+            getchar();
+            do{
+              valorDeBusca = selecionaValorDeBusca();
+              if(valorDeBusca != -1){
+                inicio = clock();
+                posicao = buscaSequencialIndexada(vetor, tamanhoVetor, valorDeBusca);
+                fim = clock();
+                imprimeResultadoDaBusca(posicao, valorDeBusca);
+                tempoBuscaSequencialIndexada = ((double)(fim-inicio)/CLOCKS_PER_SEC);
+                printf("\n\nTempo para realizar a BUSCA SEQUENCIAL INDEXADA: %lf s\n", tempoBuscaSequencialIndexada);
+                if(posicao != -1){
+                  fprintf(fp, "%lf\t%d\n", tempoBuscaSequencialIndexada, posicao);
+                }
               }
-            }
-          }while(valorDeBusca != -1);
+            }while(valorDeBusca != -1);
+            fprintf(gp, "plot 'dados.txt' with linespoints\n");
+            fclose(fp);
+            pclose(gp);
           break;
+
           case 3:
-          // Busca Binária (Penido)
-          fprintf(gp, "set title 'Busca Binária'\n");
-          fprintf(gp, "set xlabel 'Tempo'\n");
-          fprintf(gp, "set ylabel 'Posição'\n");
-          inicio = clock();
-          quickSort(vetor, 0, tamanhoVetor - 1);
-          fim = clock();
-          tempoOrdenacao = ((double)(fim-inicio)/CLOCKS_PER_SEC);
-          imprimeVetorEmTabela(vetor, tamanhoVetor);
-          printf("\n\nTempo para realizar a ordenação por Quick Sort: %lf s\n", tempoOrdenacao);
-          printf("\n\nAperte ENTER para continuar... ");
-          LIMPA_BUFFER;
-          getchar();
-          do{
-            valorDeBusca = selecionaValorDeBusca();
-            if(valorDeBusca != -1){
-              inicio = clock();
-              posicao = binarySearch(vetor, 0, tamanhoVetor, valorDeBusca);
-              fim = clock();
-              imprimeResultadoDaBusca(posicao, valorDeBusca);
-              tempoBuscaBinaria = ((double)(fim-inicio)/CLOCKS_PER_SEC);
-              printf("\n\nTempo para realizar a Busca Binário: %lf s\n", tempoBuscaBinaria);
-              if(posicao != -1){
-                fprintf(fp, "%lf\t%d\n", tempoBuscaBinaria, posicao);
+            fprintf(gp, "set title 'Busca Binária'\n");
+            fprintf(gp, "set xlabel 'Tempo'\n");
+            fprintf(gp, "set ylabel 'Posição'\n");
+            inicio = clock();
+            quickSort(vetor, 0, tamanhoVetor - 1);
+            fim = clock();
+            tempoOrdenacao = ((double)(fim-inicio)/CLOCKS_PER_SEC);
+            imprimeVetorEmTabela(vetor, tamanhoVetor);
+            printf("\n\nTempo para realizar a ordenação por Quick Sort: %lf s\n", tempoOrdenacao);
+            printf("\n\nAperte ENTER para continuar... ");
+            LIMPA_BUFFER;
+            getchar();
+            do{
+              valorDeBusca = selecionaValorDeBusca();
+              if(valorDeBusca != -1){
+                inicio = clock();
+                posicao = binarySearch(vetor, 0, tamanhoVetor, valorDeBusca);
+                fim = clock();
+                imprimeResultadoDaBusca(posicao, valorDeBusca);
+                tempoBuscaBinaria = ((double)(fim-inicio)/CLOCKS_PER_SEC);
+                printf("\n\nTempo para realizar a BUSCA BINÁRIA: %lf s\n", tempoBuscaBinaria);
+                if(posicao != -1){
+                  fprintf(fp, "%lf\t%d\n", tempoBuscaBinaria, posicao);
+                }
               }
-            }
-          }while(valorDeBusca != -1);
-          fprintf(gp, "plot 'dados.txt' with lines\n");
-          fclose(fp);
-          pclose(gp);
+            }while(valorDeBusca != -1);
+            fprintf(gp, "plot 'dados.txt' with linespoints\n");
+            fclose(fp);
+            pclose(gp);
           break;
+
           case 4:
-          // Jump search (Gabriela)
             fprintf(gp, "set title 'Jump Search'\n");
             fprintf(gp, "set xlabel 'Tempo'\n");
             fprintf(gp, "set ylabel 'Posição'\n");
@@ -153,12 +157,12 @@ int main(int argc, char* argv[]){
                 }
               }
             }while(valorDeBusca != -1);
-            fprintf(gp, "plot 'dados.txt' with lines\n");
+            fprintf(gp, "plot 'dados.txt' with linespoints\n");
             fclose(fp);
             pclose(gp);
           break;
+
           case 5:
-          // Busca Exponencial (Penido)
             fprintf(gp, "set title 'Busca Exponencial'\n");
             fprintf(gp, "set xlabel 'Tempo'\n");
             fprintf(gp, "set ylabel 'Posição'\n");
@@ -178,14 +182,14 @@ int main(int argc, char* argv[]){
                 posicao = buscaExponencial(vetor, tamanhoVetor, valorDeBusca);
                 fim = clock();
                 imprimeResultadoDaBusca(posicao, valorDeBusca);
-                tempoBuscaBinaria = ((double)(fim-inicio)/CLOCKS_PER_SEC);
-                printf("\n\nTempo para realizar a Busca Binário: %lf s\n", tempoBuscaBinaria);
+                tempoBuscaExponencial = ((double)(fim-inicio)/CLOCKS_PER_SEC);
+                printf("\n\nTempo para realizar a BUSCA EXPONENCIAL: %lf s\n", tempoBuscaExponencial);
                 if(posicao != -1){
-                  fprintf(fp, "%lf\t%d\n", tempoBuscaBinaria, posicao);
+                  fprintf(fp, "%lf\t%d\n", tempoBuscaExponencial, posicao);
                 }
               }
             }while(valorDeBusca != -1);
-            fprintf(gp, "plot 'dados.txt' with lines\n");
+            fprintf(gp, "plot 'dados.txt' with linespoints\n");
             fclose(fp);
             pclose(gp);
           break;

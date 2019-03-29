@@ -169,7 +169,7 @@ int* preencheVetorAleatorio(int *vetor, int tamanho){
      } while (status == REPETIDO);
      tempAtual = ((clock()-inicio)/CLOCKS_PER_SEC);
      if (tempAtual != tempInit) {
-      printf("%.0f%\n", ((double)i/(double)tamanho)*100);
+      printf("%.0f%%\n", ((double)i/(double)tamanho)*100);
       tempInit = ((clock()-inicio)/CLOCKS_PER_SEC);
      }
   }
