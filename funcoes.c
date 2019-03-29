@@ -417,3 +417,15 @@ int buscaExponencial(int *vetor, int tamanho, int valorDeBusca) {
     // Chama a busca binária no intervalo definido.
     return binarySearch(vetor, i/2, fmin(i, tamanho), valorDeBusca);
 }
+
+void copiaVetor(int *vetor1, int *vetor2, int tamanho) {
+  //Variaveis
+  int i, j;
+
+  //Instruções
+   for (i = 0; i < tamanho; i++){
+     // for (j = 0; j < tamanho; j++){
+       *(vetor2 + i) = *(vetor1 + i);
+     // }
+   }
+}

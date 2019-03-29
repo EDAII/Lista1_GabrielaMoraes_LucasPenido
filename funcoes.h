@@ -51,3 +51,4 @@ int jumpSearch(int *, int , int);
 int binarySearch(int *, int, int, int);
 int buscaSequencialIndexada(int *, int, int);
 int buscaExponencial(int *, int, int);
+void copiaVetor(int*, int*, int);
