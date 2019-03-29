@@ -5,7 +5,7 @@
   - Lucas Penido Antunes - 16/0013143
 
 ## Sobre
-<p align="justify">Esse trabalho compreende os algoritmos de busca sequencial com sentinela, busca sequencial indexada, busca binária, jump search e busca exponencial, com diversos tamanhos e operações cronometradas, além de um gráfico para cada método abordando a relação tempo X índice.</p>
+<p align="justify">Esse trabalho compreende os algoritmos de busca sequencial com sentinela, busca sequencial indexada, busca binária, jump search e busca exponencial, com diversos tamanhos e operações cronometradas, além de um gráfico comparativo abordando a relação tempo X índice.</p>
 
 ## Executando
   ### Linux
