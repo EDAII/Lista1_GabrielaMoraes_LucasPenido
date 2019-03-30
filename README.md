@@ -9,8 +9,16 @@
 
 ## Executando
   ### Linux
+  #### Pelo terminal
+  
  - Caso não tenha o GNUPLOT instalado em sua máquina, utilize o comando:
   > $ sudo apt-get install gnuplot.
+  
+  - Para clonar o repositório:
+ > $ git clone https://github.com/EDAII/Lista1_GabrielaMoraes_LucasPenido
+ 
+ - Acesse a pasta do projeto:
+ > $ cd Lista1_GabrielaMoraes_LucasPenido/
 
  - Para compilar o programa execute:
  > $ gcc funcoes.c main.c -o [Nome do executável] -lm
